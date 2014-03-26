@@ -2,24 +2,100 @@
 /*******************************************************
  * Otter Template/Expedition Engine
  * @Author Kelly Farris
- * @Copyright 2014 Kelly Farris
+ * 
  * @Version 0.1
- */
+ * 
+ * 
+ * 
+ * @Copyright 2014 Kelly Farris
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 
+ * See the LICENSE file for more details.
+*/
+ 
 class otter
 {
-	
+	/**
+	 * array that stores the 'seed', and any applicable data
+	 * @var unknown
+	 */
 	private $tag = array();
+	
+	/**
+	 * The following are currently unused after a change to the handling of scripts
+	 * @var unknown
+	 */
 	private $script_path = null;
 	private $css_path = null;
 	private $css = array();
+	
+	/**
+	 * Array where the paths for the scripts/css are stored
+	 * @var unknown
+	 */
 	private $scripts = array();
+	
+	
+	/**
+	 * Array that stores defined meta tags
+	 * @var unknown
+	 */
 	private $meta = array();
+	
+	/**
+	 * array that initially stored 'variables'.  
+	 * Currently it's been deemed redundant.
+	 * @var unknown
+	 */
 	private $vars = array();
+	
+	/**
+	 * Array containing defined conditionals
+	 * @var unknown
+	 */
 	private $conditional = array();
+	
+	/**
+	 * initially contained the rendered page.
+	 * This page is now stored in a $_SESSION variable
+	 * @var unknown
+	 */
 	private $cached_render = null;
+	
+	/**
+	 * If set to true, cached page will be cleared
+	 * @var unknown
+	 */
 	private $clear_cache = false;
+	
+	/**
+	 * If set to true, cached page will be displayed.
+	 * Don't use if you have dynamic content.
+	 * @var unknown
+	 */
 	private $use_cache = false;
+	
+	/**
+	 * Array containing defined incrementals.
+	 * @var unknown
+	 */
 	private $inc = array();
+	
+	/**
+	 * Array containting defined forms.
+	 * @var unknown
+	 */
 	private $form = array();
 	
 	
@@ -44,12 +120,12 @@ class otter
 			$options = "";
 		}
 		
-		
-		$this->tag[$seed] = "<label$options>$text</label>";
+			$this->tag[$seed] = "<label$options>$text</label>";
 	}
 	
 	/**
 	 * Defines a TABLE element
+	 * CURRENTLY UNFINISHED - Will result in a lot of nothing.
 	 * @param unknown $seed
 	 * @param array $header
 	 * @param array $content
@@ -101,7 +177,7 @@ class otter
 	
 	
 	/**
-	 * Creates a label element and returns it to be included in the defined tag.
+	 * Defines a label element and returns it to be included in the defined tag.
 	 * @param string $id
 	 * @param string $label
 	 * @return string
@@ -188,8 +264,8 @@ class otter
 	/**
 	 * Defines an input.
 	 * @param string $seed
-	 * @param string $type
-	 * @param array $attributes
+	 * @param string $type text,password,email,phone, etc.  Any HTML5 types.
+	 * @param array $attributes [optional] An multi-dimensional array containting attributes such as id, class, name, data, etc.
 	 */
 	function addInput($seed,$type,$attributes=array())
 	{
@@ -215,8 +291,8 @@ class otter
 	
 	/**
 	 * Defines a canvas.
-	 * @param unknown $seed
-	 * @param unknown $attributes
+	 * @param string $seed
+	 * @param array $attributes [optional]
 	 */
 	function addCanvas($seed,$attributes=array())
 	{
@@ -232,8 +308,9 @@ class otter
 	 * @param string $seed
 	 * @param string $id
 	 * @param array $data  one-dimensional array of elements.
+	 * @param array $attributes [optional]
 	 */
-	function addDatalist($seed,$id,array $data)
+	function addDatalist($seed,$id,array $data,$attributes = array())
 	{
 		$data_list = null;
 		foreach($data as $value)
@@ -245,7 +322,7 @@ class otter
 	}
 	
 	/**
-	 * Defines an <embed> tag.
+	 * Defines an EMBED tag.
 	 * @param string $seed
 	 * @param string $src
 	 * @param array $attributes [optional]
@@ -257,7 +334,14 @@ class otter
 		$this->tag[$seed] = $build_string;
 	}
 	
-	function addFigure($seed,$src,$caption,$attributes=array())
+	/**
+	 * Defines a FIGURE tag
+	 * @param string $seed
+	 * @param string $src
+	 * @param string $caption [optional]
+	 * @param array $attributes [optional]
+	 */
+	function addFigure($seed,$src,$caption=null,$attributes=array())
 	{
 		$options = $this->innerTags($attributes);
 		$build_string="<figure><img src='$src' $attributes ><figcaption>$caption</figcaption></figure>";
@@ -278,11 +362,11 @@ class otter
 	/**
 	 * Defines multiple CSS or JavaScripts. 
 	 * All scripts are loaded in the order they in the array.
-	 * @param string $seed A unique identifier or Tag that will be called in the template {{header}}, for example.  Omit the {{}}.
-	 * @param string $script_path
-	 * @param string $css_path
-	 * @param array $scripts define each script as either 'script' or 'css'
-	 * @example array("script"=>"//google.com/api/jquery/jquery.1.10.min.js","css"=>"css/styles.css")
+	 * @param string $seed A unique identifier or Tag that will be called in the template.
+	 * @param array $scripts One-dimensional array that contains paths to all required scripts.
+	 * @example array("//google.com/api/jquery/jquery.1.10.min.js","css/styles.css","scripts/myscript.js")
+	 * OtterEngine will determine if it is a CSS or JavaScript source automatically.
+	 * Scripts are inserted in the order they are in the array.
 	 */
 	function addBulkScripts($seed,array $scripts)
 	{
@@ -306,7 +390,7 @@ class otter
 	
 	/**
 	 * Defines meta tags.  
-	 * @example array("name"=>"author
+	 * @example array("name"=>"author","description"=>"J.K. Rowling");
 	 * @param array $content
 	 */
 	function addMeta(array $attributes)
@@ -343,7 +427,7 @@ class otter
 	 * Defines a NAV element, including links
 	 * Links should be defined in an array('href'=>'/example.html','text'=>'Example')
 	 * @param string $seed
-	 * @param array $links
+	 * @param array $links Can be defined OtterEngine links, such as {{link1}}
 	 * @param string $separator [optional] Defines a character to separate the nav link elements.
 	 * @param array $attributes [optional] attributes for the NAV tag
 	 */
@@ -363,8 +447,9 @@ class otter
 	
 	/**
 	 * Defines a NOSCRIPT element.
-	 * @param unknown $seed
-	 * @param unknown $text
+	 * @param string $seed
+	 * @param string $text
+	 * @param array $attributes [optional]
 	 */
 	function addNoScript($seed,$text,$attributes=array())
 	{
@@ -388,7 +473,7 @@ class otter
 	/**
 	 * Defines an ORDERED LIST
 	 * @param string $seed
-	 * @param array $list_items a one-dimensional array of the items
+	 * @param array $list_items a one-dimensional array of the items.  Can be defined OtterEngine tags.
 	 * @param array $attributes [optional]
 	 */
 	function addOrderedList($seed,array $list_items,$attributes=array())
@@ -407,7 +492,7 @@ class otter
 	 * Defines Unordered List
 	 * 
 	 * @param unknown $seed
-	 * @param array $list_items one-dimensional array of items
+	 * @param array $list_items one-dimensional array of items.  Can be defined OtterEngine tags.
 	 * @param array $attributes for the UL tag
 	 */
 	function addUnorderedList($seed,array $list_items,$attributes=array())
@@ -428,7 +513,7 @@ class otter
 	 * @param string $seed
 	 * @param string $value
 	 * @param string $max
-	 * @param array $attributes
+	 * @param array $attributes [optional]
 	 * @tutorial leave $value and $max blank to have a sweeping progress bar <progress></progress>
 	 * @tutorial The PROGRESS tag is not supported in Internet Explorer 9 and earlier versions.
 	 */
