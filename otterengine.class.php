@@ -99,11 +99,37 @@ class otter
 	private $form = array();
 	
 	
+	
 	function __construct()
 	{
 		//awaiting something useful
 	}
 	
+	
+	
+	/**
+	 * Adds the seed and HTML to the array.
+	 * @param string $tag
+	 * @param string $seed
+	 * @param string $build_string
+	 */
+	private function createTag($tag,$seed,$build_string)
+	{
+		
+			$this->tag[$seed][] =$build_string;
+	}
+	
+	
+	/**
+	 * Defines a Generic or Basic element.  This should be a fully formed HTML tag, including any required 
+	 * attributes.
+	 * @param unknown $seed
+	 * @param unknown $html
+	 */
+	function addBasicElement($seed,$html)
+	{
+		$this->createTag('tag', $seed, $html);
+	}
 	
 	/**
 	 * Defines a generic label.  Can use attributes to associate it with another element.
@@ -120,7 +146,9 @@ class otter
 			$options = "";
 		}
 		
-			$this->tag[$seed] = "<label$options>$text</label>";
+			//$this->tag[$seed] = "<label$options>$text</label>";
+			$build_string = "<label$options>$text</label>";
+			$this->createTag('tag',$seed,$build_string);
 	}
 	
 	/**
@@ -172,7 +200,8 @@ class otter
 		$options = $this->innerTags($attributes);
 		
 		$build_string = "<a href='$href' $options>$innerText</a>";
-		$this->tag[$seed] = $build_string;
+		$this->createTag('tag',$seed,$build_string);
+		//$this->tag[$seed] = $build_string;
 	}
 	
 	
@@ -229,7 +258,8 @@ class otter
 			
 		}
 		
-		$this->tag[$seed] = $s_label . $build_string . $option . "</select>";
+		//$this->tag[$seed] = $s_label . $build_string . $option . "</select>";
+		$this->createTag('tag',$seed, $s_label . $build_string . $option . "</select>");
 	}
 	
 	
@@ -259,7 +289,8 @@ class otter
 		$options = $this->innerTags($attributes);
 		
 		$build_string = "<img src='$src'$options>";
-		$this->tag[$seed] = $build_string;
+		//$this->tag[$seed] = $build_string;
+		$this->createTag('tag',$seed,$build_string);
 	}
 	/**
 	 * Defines an input.
@@ -271,7 +302,8 @@ class otter
 	{
 		$options = $this->innerTags($attributes);
 		$build_string = "<input type='$type' $options >";
-		$this->tag[$seed] = $build_string;
+		//$this->tag[$seed] = $build_string;
+		$this->createTag('tag',$seed,$build_string);
 	}
 	
 	
@@ -285,7 +317,8 @@ class otter
 	{
 		$options = $this->innerTags($attributes);
 		$build_string = "<textarea $options>$text</textarea>";
-		$this->tag[$seed] = $build_string;
+		//$this->tag[$seed] = $build_string;
+		$this->createTag('tag',$seed,$build_string);
 		
 	}
 	
@@ -298,7 +331,8 @@ class otter
 	{
 		$options = $this->innerTags($attributes);
 		$build_string = "<canvas $options ></canvas>";
-		$this->tag[$seed] = $build_string;
+		//$this->tag[$seed] = $build_string;
+		$this->createTag('tag',$seed,$build_string);
 	}
 	
 	
@@ -318,7 +352,8 @@ class otter
 			$data_list .="<option value='$value'>";
 		}
 		$build_string= "<datalist id='$id'>" .$data_list ."</datalist>";
-		$this->tag[$seed] = $build_string;
+		//$this->tag[$seed] = $build_string;
+		$this->createTag('tag',$seed,$build_string);
 	}
 	
 	/**
@@ -331,7 +366,8 @@ class otter
 	{
 		$options = $this->innerTags($attributes);
 		$build_string = "<embed src='$src' $attributes >";
-		$this->tag[$seed] = $build_string;
+		//$this->tag[$seed] = $build_string;
+		$this->createTag('tag',$seed,$build_string);
 	}
 	
 	/**
@@ -345,7 +381,8 @@ class otter
 	{
 		$options = $this->innerTags($attributes);
 		$build_string="<figure><img src='$src' $attributes ><figcaption>$caption</figcaption></figure>";
-		$this->tag[$seed] = $build_string;
+		//$this->tag[$seed] = $build_string;
+		$this->createTag('tag',$seed,$build_string);
 	}
 	
 	/**
@@ -356,7 +393,8 @@ class otter
 	function addCSS($seed,$path)
 	{
 		$build_string = "<link rel='stylesheet' type='text/css' href='$path'>";
-		$this->tag[$seed] = $build_string;
+		//$this->tag[$seed] = $build_string;
+		$this->createTag('tag',$seed,$build_string);
 	}
 	
 	/**
@@ -385,7 +423,8 @@ class otter
 				$build_scripts .=" <link rel='stylesheet' type='text/css' href='$filename'> ";
 			}
 		}
-		$this->scripts[$seed] = $build_scripts;
+		//$this->scripts[$seed] = $build_scripts;
+		$this->createTag('tag',$seed,$build_string);
 	}
 	
 	/**
@@ -419,7 +458,8 @@ class otter
 	{
 		$options = $this->innerTags($attributes);
 		$build_string = "<meter value='$value' min='$min' max='$max' $options>$text</meter>";
-		$this->tag[$seed] = $build_string;
+		//$this->tag[$seed] = $build_string;
+		$this->createTag('tag',$seed,$build_string);
 	}
 	
 	
@@ -442,7 +482,8 @@ class otter
 		
 		$s_links = trim($s_links,$separator);
 		$build_string = "<nav $options> ". $s_links . "</nav>";
-		$this->tag[$seed] = $build_string;
+		//$this->tag[$seed] = $build_string;
+		$this->createTag('tag',$seed,$build_string);
 	}
 	
 	/**
@@ -455,7 +496,8 @@ class otter
 	{
 		$options = $this->innerTags($attributes);
 		$build_string = "<noscript $options>$text</noscript>";
-		$this->tag[$seed] = $build_string;
+		//$this->tag[$seed] = $build_string;
+		$this->createTag('tag',$seed,$build_string);
 	}
 	
 	
@@ -467,7 +509,8 @@ class otter
 	function addTitle($seed,$title)
 	{
 		$build_string = "<title>$title</title>";
-		$this->tag[$seed] = $build_string;
+		//$this->tag[$seed] = $build_string;
+		$this->createTag('tag',$seed,$build_string);
 	}
 	
 	/**
@@ -485,7 +528,8 @@ class otter
 			$items .= "<li>$item</li>";
 		}
 		$build_string = "<ol $options> $items </ol>";
-		$this->tag[$seed] = $build_string;
+		//$this->tag[$seed] = $build_string;
+		$this->createTag('tag',$seed,$build_string);
 	}
 	
 	/**
@@ -504,7 +548,8 @@ class otter
 			$items .= "<li>$item</li>";
 		}
 		$build_string = "<ul $options> $items </ul>";
-		$this->tag[$seed] = $build_string;
+		//$this->tag[$seed] = $build_string;
+		$this->createTag('tag',$seed,$build_string);
 	}
 	
 	
@@ -534,7 +579,8 @@ class otter
 		
 		$options = $this->innerTags($attributes);
 		$build_string = "<progress $val $max_s $options></progress>";
-		$this->tag[$seed]=$build_string;
+		//$this->tag[$seed]=$build_string;
+		$this->createTag('tag',$seed,$build_string);
 		
 	}
 	/**
@@ -583,7 +629,8 @@ class otter
 			$s_sources .= "<source src='$src' type='$type'>";
 		}
 		$build_string = "<audio controls $options> $s_sources </audio>";
-		$this->tag[$seed] = $build_string;
+		//$this->tag[$seed] = $build_string;
+		$this->createTag('tag',$seed,$build_string);
 	}
 	
 	
@@ -715,6 +762,7 @@ class otter
 		
 		
 		//run this twice to replace any tags added AFTER first scan (ie. embedded tags)
+		/*
 		foreach($this->tag as $seed=>$content)
 			
 		{
@@ -725,13 +773,38 @@ class otter
 				
 		{
 			$template = preg_replace("/{{".$seed."}}/", $content, $template);
-		}
+		}*/
+		
+		$template = $this->fetchTags($template);
+		$template = $this->fetchTags($template);
+		
 		$template = $this->renderIncrements($template); //do this here so incrementals are rendered correctly
 		$this->cachePage($path,$template);
 		
 		return $template . "<!--otter rendered live-->";
 	}
 	
+	/**
+	 * 
+	 * @param unknown $template
+	 * @return Ambigous <NULL, unknown>
+	 */
+	private function fetchTags($template)
+	{
+		$render_string = null;
+		foreach($this->tag as $tags=>$seed)
+		{
+				foreach($seed as $html)
+				{
+					$render_string .=  $html;
+				}
+				 $template = preg_replace("/{{".$tags."}}/", $render_string, $template);
+				 $render_string = null;
+				 		
+		}
+		
+		return $template;
+	}
 	
 	/**
 	 * Renders defined forms.
@@ -776,10 +849,7 @@ class otter
 				$this->tag[$output_array['var'][$key2]]=$output_array['content'][$key2];
 			}
 		}
-		foreach($this->tag as $seed=>$content)
-		{
-			$template = preg_replace("/{{!". $seed . "}}(?P<content>(?:.|\r?\n)*?){{\/!".$seed."}}/", $content, $template);
-		}
+		$template = $this->fetchTags($template);
 		
 		return $template;
 	}
