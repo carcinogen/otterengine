@@ -423,8 +423,8 @@ class otter
 				$build_scripts .=" <link rel='stylesheet' type='text/css' href='$filename'> ";
 			}
 		}
-		//$this->scripts[$seed] = $build_scripts;
-		$this->createTag('tag',$seed,$build_string);
+		$this->scripts[$seed] = $build_scripts;
+		
 	}
 	
 	/**
