@@ -465,19 +465,19 @@ class otter
 	
 	/**
 	 * Defines a NAV element, including links
-	 * Links should be defined in an array('href'=>'/example.html','text'=>'Example')
+	 * Links should be defined in an array("< a href='http://mylink.com'>My LInk</a>")
 	 * @param string $seed
 	 * @param array $links Can be defined OtterEngine links, such as {{link1}}
 	 * @param string $separator [optional] Defines a character to separate the nav link elements.
 	 * @param array $attributes [optional] attributes for the NAV tag
 	 */
-	function addNav($seed,array $links,$separator = null,$attributes = array())
+	function addNav($seed,array $links,$separator="",$attributes = array())
 	{
 		$options = $this->innerTags($attributes);
 		$s_links = null;
 		foreach($links as $href=>$text)
 		{
-			$s_links .= "<a href='$href'>$text</a>$separator";
+			$s_links .= $text ." ". $separator;
 		}
 		
 		$s_links = trim($s_links,$separator);
