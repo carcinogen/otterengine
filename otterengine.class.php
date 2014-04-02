@@ -975,7 +975,8 @@ class otter
 	 */
 	function addVariable($seed,$value)
 	{
-		$this->tag[$seed] = $value;
+		$this->createTag('tag',$seed,$value);
+		
 	}
 	
 	/**
