@@ -10,7 +10,7 @@ PHP 5.3+
 
 Installation/Use
 ------------------------------------------------
-Save the OtterEngine folder to a location accessible to your PHP script.  
+Save the otterengine.class.php file to a location accessible to your PHP script.  
 Include or require the library "otterengine.class.php" in your script.
 By default, the class should be located in the root of the OtterEngine folder.
 
@@ -18,23 +18,8 @@ In your script, define a new OtterEngine object.
 
 $otter = new otter();
 
-Define any necessary elements:
-
-$otter->addLink('link1', 'http://google.com', 'Click to visit google');
-
-Echo the rendered HTML template:
-
-$html = "my_template.html";
-
-echo $otter->renderTemplate($html);
-
-In your HTML, you simply have to add {{link1}}, and OtterEngine will insert your defined tag to that location.
-
-<body>
-<div class="links">{{link}}</div>
-
 For a more detailed tutorial on the many powerful functions and features of OtterEngine, please visit
-http://otterengine.com/tutorials
+http://otterengine.com/learn
 
 
 
