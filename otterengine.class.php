@@ -233,13 +233,14 @@ class otter
 	 * @param string $selected_option [optional]  If this matches either the VALUE or INNERTEXT, it will set that
 	 * option as 'selected'
 	 */
-	function addSelect($seed, array $options, array $attributes = array(),$label=null,$selected_option = null)
+	function addSelect($seed, array $options, $attributes = array(),$label=null,$selected_option = null)
 	{
-		
+		$s_label = "";
 		//adds a label to the element (if defined)
-		$s_label = $this->createLabel($attributes['id'],$label);
-			
-		
+		if(isset($attributes['id']))
+		{
+			$s_label = $this->createLabel($attributes['id'],$label);
+		}
 		
 		$inner_tags = $this->innerTags($attributes);
 		$build_string = "<select " . $inner_tags . ">";
