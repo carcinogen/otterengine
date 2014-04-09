@@ -644,6 +644,7 @@ class otter
 	{
 		$html = file_get_contents($filename);
 		$this->includes[$seed] = $html;
+		$this->createTag('tag',$seed,$html);
 	}
 	
 	/**
