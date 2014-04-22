@@ -299,10 +299,11 @@ class otter
 	 * @param string $type text,password,email,phone, etc.  Any HTML5 types.
 	 * @param array $attributes [optional] An multi-dimensional array containting attributes such as id, class, name, data, etc.
 	 */
-	function addInput($seed,$type,$attributes=array())
+	function addInput($seed,$type,$attributes=array(),$required = false)
 	{
 		$options = $this->innerTags($attributes);
-		$build_string = "<input type='$type' $options >";
+		$req = ($required == true ? 'required' : null);
+		$build_string = "<input type='$type' $options $req >";
 		//$this->tag[$seed] = $build_string;
 		$this->createTag('tag',$seed,$build_string);
 	}
