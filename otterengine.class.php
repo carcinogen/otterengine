@@ -106,6 +106,14 @@ class otter
 	}
 	
 	
+	/**
+	 * Deletes all defined html elements associated with the specified seed name.
+	 * @param string $seed
+	 */
+	function clearSeed($seed)
+	{
+		unset($this->tag[$seed]);
+	}
 	
 	/**
 	 * Adds the seed and HTML to the array.
