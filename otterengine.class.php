@@ -3,7 +3,7 @@
  * Otter Template/Expedition Engine
  * @Author Kelly Farris
  * 
- * @Version 0.1
+ * @Version 1.0
  * 
  * 
  * 
@@ -102,7 +102,7 @@ class otter
 	
 	function __construct()
 	{
-		//awaiting something useful
+		
 	}
 	
 	
@@ -124,7 +124,7 @@ class otter
 	private function createTag($tag,$seed,$build_string)
 	{
 		
-			$this->tag[$seed][] =$build_string;
+			$this->tag[$seed][] = $build_string;
 	}
 	
 	
